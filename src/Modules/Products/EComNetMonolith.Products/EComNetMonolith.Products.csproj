@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\EComNetMonolith.Shared\EComNetMonolith.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
