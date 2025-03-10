@@ -42,7 +42,7 @@ namespace EComNetMonolith.Products.Models
             ImageUrl = imageUrl;
             Categories = categories;
 
-            // TODO: Add domain event if price or stock is updated
+            // TODO: Add domain event if price is updated
         }
     }
 }

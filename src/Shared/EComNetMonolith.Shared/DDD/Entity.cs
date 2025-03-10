@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EComNetMonolith.Shared.DDD
+﻿namespace EComNetMonolith.Shared.DDD
 {
     public abstract class Entity<TPrimaryKey> : IEntity<TPrimaryKey>
     {
