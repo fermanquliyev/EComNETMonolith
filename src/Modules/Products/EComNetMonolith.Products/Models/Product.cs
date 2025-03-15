@@ -1,8 +1,9 @@
-﻿using EComNetMonolith.Shared.DDD;
+﻿using EComNetMonolith.Products.Events;
+using EComNetMonolith.Shared.DDD;
 
 namespace EComNetMonolith.Products.Models
 {
-    public class Product: Entity<Guid>
+    public class Product: Aggregate<Guid>
     {
         public string Name { get; protected set; } = default!;
         public string Description { get; protected set; } = default!;
@@ -27,6 +28,9 @@ namespace EComNetMonolith.Products.Models
                 ImageUrl = imageUrl,
                 Categories = categories
             };
+
+            product.AddDomainEvent(new ProductCreatedEvent(product));
+
             return product;
         }
 
@@ -37,12 +41,14 @@ namespace EComNetMonolith.Products.Models
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price, nameof(price));
             Name = name;
             Description = description;
-            Price = price;
+            if(price != Price)
+            {
+                Price = price;
+                AddDomainEvent(new ProductPriceChangedEvent(this));
+            }
             Stock = stock;
             ImageUrl = imageUrl;
             Categories = categories;
-
-            // TODO: Add domain event if price is updated
         }
     }
 }
