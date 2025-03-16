@@ -4,12 +4,24 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>63a64337-58b6-435d-8a66-1b401d76e810</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Modules\Cart\EComNetMonolith.Cart\EComNetMonolith.Cart.csproj" />
     <ProjectReference Include="..\..\Modules\Order\EComNetMonolith.Order\EComNetMonolith.Order.csproj" />
-    <ProjectReference Include="..\..\Modules\Products\EComNetMonolith.Products\EComNetMonolith.Products.csproj" />
+    <ProjectReference Include="..\..\Modules\Inventory\EComNetMonolith.Inventory\EComNetMonolith.Inventory.csproj" />
   </ItemGroup>
 
 </Project>

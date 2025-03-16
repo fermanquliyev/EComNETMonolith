@@ -1,7 +1,7 @@
-﻿using EComNetMonolith.Products.Events;
+﻿using EComNetMonolith.Inventory.Events;
 using EComNetMonolith.Shared.DDD;
 
-namespace EComNetMonolith.Products.Models
+namespace EComNetMonolith.Inventory.Models
 {
     public class Product: Aggregate<Guid>
     {

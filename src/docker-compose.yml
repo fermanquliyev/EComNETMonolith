@@ -1,0 +1,6 @@
+services:
+  ecomdb:
+    image: postgres
+
+volumes:
+  postgres_ecomdb:

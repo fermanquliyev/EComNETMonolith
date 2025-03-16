@@ -1,0 +1,12 @@
+services:
+  ecomdb:
+    container_name: ecomdb
+    environment:
+      POSTGRES_DB: EComDB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_ecomdb:/var/lib/postgresql/data

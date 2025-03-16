@@ -1,7 +1,7 @@
-﻿using EComNetMonolith.Products.Models;
+﻿using EComNetMonolith.Inventory.Models;
 using EComNetMonolith.Shared.DDD;
 
-namespace EComNetMonolith.Products.Events
+namespace EComNetMonolith.Inventory.Events
 {
     public record ProductPriceChangedEvent(Product Product): IDomainEvent;
 }

@@ -13,17 +13,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EComNetMonolith.WebApiHost"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cart", "Cart", "{542210E4-0B14-4BD8-AE32-15213E07125E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Products", "Products", "{0CA38557-44CD-494E-AA40-11C1CF556A13}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Inventory", "Inventory", "{0CA38557-44CD-494E-AA40-11C1CF556A13}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Order", "Order", "{5CC0119A-98C1-4C5C-8F8C-3B7FBC0E1D5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EComNetMonolith.Products", "Modules\Products\EComNetMonolith.Products\EComNetMonolith.Products.csproj", "{53B98AA6-D3F8-4154-BEC1-F2761164AAA8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EComNetMonolith.Inventory", "Modules\Inventory\EComNetMonolith.Inventory\EComNetMonolith.Inventory.csproj", "{53B98AA6-D3F8-4154-BEC1-F2761164AAA8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EComNetMonolith.Order", "Modules\Order\EComNetMonolith.Order\EComNetMonolith.Order.csproj", "{E35DA8BC-12BD-41B3-83AA-C77CBF1DE0C7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EComNetMonolith.Cart", "Modules\Cart\EComNetMonolith.Cart\EComNetMonolith.Cart.csproj", "{A97861F4-E156-41F4-92E7-39B7746D347F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EComNetMonolith.Shared", "Shared\EComNetMonolith.Shared\EComNetMonolith.Shared.csproj", "{22EE33E3-730C-4573-BA06-9946DD9B9C49}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{BAB57A2C-AC22-45F6-AA38-0D25E462A584}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{22EE33E3-730C-4573-BA06-9946DD9B9C49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22EE33E3-730C-4573-BA06-9946DD9B9C49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22EE33E3-730C-4573-BA06-9946DD9B9C49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAB57A2C-AC22-45F6-AA38-0D25E462A584}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAB57A2C-AC22-45F6-AA38-0D25E462A584}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAB57A2C-AC22-45F6-AA38-0D25E462A584}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAB57A2C-AC22-45F6-AA38-0D25E462A584}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
