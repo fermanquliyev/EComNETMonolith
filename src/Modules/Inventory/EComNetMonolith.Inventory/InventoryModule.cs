@@ -4,8 +4,10 @@ using EComNetMonolith.Shared.Data;
 using EComNetMonolith.Shared.Data.Interceptors;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace EComNetMonolith.Inventory
 {
@@ -16,11 +18,17 @@ namespace EComNetMonolith.Inventory
             //Data infra services
             var databaseConnectionString = configuration.GetConnectionString("Database");
 
-            services.AddScoped<EntityAuditInterceptor>();
-
-            services.AddDbContext<InventoryDbContext>((sp,options) =>
+            services.AddMediatR(configuration =>
             {
-                options.AddInterceptors(sp.GetRequiredService<EntityAuditInterceptor>());
+                configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            });
+
+            services.AddScoped<ISaveChangesInterceptor,EntityAuditInterceptor>();
+            services.AddScoped<ISaveChangesInterceptor, DomainEventDispatcherInterceptor>();
+
+            services.AddDbContext<InventoryDbContext>((sp, options) =>
+            {
+                options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
                 options.UseNpgsql(databaseConnectionString);
             });
 
