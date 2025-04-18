@@ -13,6 +13,10 @@
   <ItemGroup>
     <Folder Include="EventHandlers\" />
     <Folder Include="Exceptions\" />
+    <Folder Include="Features\DeleteProduct\" />
+    <Folder Include="Features\GetProductById\" />
+    <Folder Include="Features\GetProductByCategory\" />
+    <Folder Include="Features\GetProducts\" />
   </ItemGroup>
 
 </Project>

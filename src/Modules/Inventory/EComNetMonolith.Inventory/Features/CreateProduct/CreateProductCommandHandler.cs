@@ -1,22 +1,39 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EComNetMonolith.Inventory.Data;
+using EComNetMonolith.Inventory.DataTransferObjects;
+using EComNetMonolith.Inventory.Models;
+using EComNetMonolith.Shared.CQRS;
 
-namespace EComNetMonolith.Inventory.Features.CreateProduct
+namespace EComNetMonolith.Inventory.Features.CreateProduct;
+
+public record CreateProductCommand(ProductDto Product) : ICommand<CreateProductResponse>;
+
+public record CreateProductResponse(Guid Id);
+
+public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductResponse>
 {
-    public record CreateProductCommand(string Name, List<string> Categories, string ImageUrl, string Description, decimal Price, int Stock): IRequest<CreateProductResponse>;
+    private readonly InventoryDbContext inventoryDbContext;
 
-    public record CreateProductResponse(Guid Id);
-
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, CreateProductResponse>
+    public CreateProductCommandHandler(InventoryDbContext inventoryDbContext)
     {
-        public Task<CreateProductResponse> Handle(CreateProductCommand command, CancellationToken cancellationToken)
-        {
-            // TODO: Implement the command handler logic
-            throw new NotImplementedException();
-        }
+        this.inventoryDbContext = inventoryDbContext;
+    }
+    public async Task<CreateProductResponse> Handle(CreateProductCommand command, CancellationToken cancellationToken)
+    {
+        var productDto = command.Product;
+
+        var product = Product.Create(
+            Guid.CreateVersion7(),
+            productDto.Name,
+            productDto.Description,
+            productDto.Price,
+            productDto.Stock,
+            productDto.ImageUrl,
+            productDto.Categories
+            );
+
+        inventoryDbContext.Products.Add(product);
+        await inventoryDbContext.SaveChangesAsync(cancellationToken);
+
+        return new CreateProductResponse(product.Id);
     }
 }
