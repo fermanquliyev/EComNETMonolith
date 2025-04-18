@@ -14,11 +14,7 @@ public class GetProductByIdQueryHandler: IQueryHandler<GetProductByIdQuery, Prod
     }
     public async Task<ProductDto> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
     {
-        var product = await inventoryDbContext.Products.FindAsync([ query.Id ], cancellationToken: cancellationToken);
-        if (product == null)
-        {
-            throw new Exception($"Product not found: {query.Id}");
-        }
+        var product = await inventoryDbContext.Products.FindAsync([ query.Id ], cancellationToken: cancellationToken) ?? throw new Exception($"Product not found: {query.Id}");
         return new ProductDto(
             product.Id,
             product.Name,

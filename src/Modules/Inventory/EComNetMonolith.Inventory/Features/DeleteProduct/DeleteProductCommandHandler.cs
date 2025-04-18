@@ -14,11 +14,7 @@ public class DeleteProductCommandHandler: ICommandHandler<DeleteProductCommand>
     }
     public async Task<Unit> Handle(DeleteProductCommand command, CancellationToken cancellationToken)
     {
-        var product = await inventoryDbContext.Products.FindAsync([command.Id],cancellationToken:cancellationToken);
-        if (product == null)
-        {
-            throw new Exception($"Product not found: {command.Id}");
-        }
+        var product = await inventoryDbContext.Products.FindAsync([command.Id],cancellationToken:cancellationToken) ?? throw new Exception($"Product not found: {command.Id}");
         inventoryDbContext.Products.Remove(product);
         await inventoryDbContext.SaveChangesAsync(cancellationToken);
         return Unit.Value;
