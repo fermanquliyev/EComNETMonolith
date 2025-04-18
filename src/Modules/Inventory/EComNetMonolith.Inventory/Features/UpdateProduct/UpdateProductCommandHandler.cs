@@ -20,7 +20,7 @@ public class UpdateProductCommandHandler : ICommandHandler<UpdateProductCommand,
     {
 
         var productDto = command.Product;
-        var product = await inventoryDbContext.Products.FindAsync(productDto.Id);
+        var product = await inventoryDbContext.Products.FindAsync([productDto.Id], cancellationToken: cancellationToken);
         if (product == null)
         {
             throw new Exception($"Product not found: {productDto.Id}");
@@ -34,7 +34,7 @@ public class UpdateProductCommandHandler : ICommandHandler<UpdateProductCommand,
             productDto.Categories
         );
         inventoryDbContext.Products.Update(product);
-        await inventoryDbContext.SaveChangesAsync();
+        await inventoryDbContext.SaveChangesAsync(cancellationToken);
         return new UpdateProductResponse(product.Id);
     }
 }
