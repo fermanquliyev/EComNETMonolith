@@ -2,6 +2,7 @@
 using EComNetMonolith.Inventory.Data.Seed;
 using EComNetMonolith.Shared.Data;
 using EComNetMonolith.Shared.Data.Interceptors;
+using EComNetMonolith.Shared.Endpoints;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -23,7 +24,7 @@ namespace EComNetMonolith.Inventory
                 configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
             });
 
-            services.AddScoped<ISaveChangesInterceptor,EntityAuditInterceptor>();
+            services.AddScoped<ISaveChangesInterceptor, EntityAuditInterceptor>();
             services.AddScoped<ISaveChangesInterceptor, DomainEventDispatcherInterceptor>();
 
             services.AddDbContext<InventoryDbContext>((sp, options) =>
@@ -40,6 +41,7 @@ namespace EComNetMonolith.Inventory
         public static IApplicationBuilder UseInventoryModule(this IApplicationBuilder app)
         {
             app.UseMigration<InventoryDbContext>();
+            app.AddEndpoints(typeof(InventoryModule).Assembly);
             return app;
         }
     }

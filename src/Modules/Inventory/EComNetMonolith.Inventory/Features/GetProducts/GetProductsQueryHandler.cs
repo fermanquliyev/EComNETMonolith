@@ -16,7 +16,7 @@ public class GetProductsQueryHandler: IQueryHandler<GetProductsQuery, GetProduct
     }
     public async Task<GetProductsQueryResponse> Handle(GetProductsQuery query, CancellationToken cancellationToken)
     {
-        var productsQuery = inventoryDbContext.Products.AsQueryable();
+        var productsQuery = inventoryDbContext.Products.AsNoTracking().AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(query.Search))
         {

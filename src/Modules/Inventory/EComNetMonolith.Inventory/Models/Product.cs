@@ -43,8 +43,8 @@ namespace EComNetMonolith.Inventory.Models
             Description = description;
             if(price != Price)
             {
+                AddDomainEvent(new ProductPriceChangedEvent(this,this.Price,price));
                 Price = price;
-                AddDomainEvent(new ProductPriceChangedEvent(this));
             }
             Stock = stock;
             ImageUrl = imageUrl;
