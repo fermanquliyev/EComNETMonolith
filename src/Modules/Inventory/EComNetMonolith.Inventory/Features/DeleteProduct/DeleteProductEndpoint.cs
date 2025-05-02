@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Routing;
 
 namespace EComNetMonolith.Inventory.Features.DeleteProduct
 {
-    public record DeleteProductResponse(Guid Id);
     public class DeleteProductEndpoint : IEndpoint
     {
         public RouteHandlerBuilder MapEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
