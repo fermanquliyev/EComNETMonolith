@@ -1,5 +1,4 @@
 ﻿using EComNetMonolith.Inventory.DataTransferObjects;
-using EComNetMonolith.Inventory.Features.CreateProduct;
 using EComNetMonolith.Shared.Endpoints;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -7,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
-namespace EComNetMonolith.Inventory.Endpoints
+namespace EComNetMonolith.Inventory.Features.CreateProduct
 {
     public record CreateProductRequest(ProductDto Product);
     public record CreateProductResponse(Guid Id);

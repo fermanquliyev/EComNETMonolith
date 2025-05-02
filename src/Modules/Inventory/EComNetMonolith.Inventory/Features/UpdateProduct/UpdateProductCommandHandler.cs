@@ -4,11 +4,11 @@ using EComNetMonolith.Shared.CQRS;
 
 namespace EComNetMonolith.Inventory.Features.CreateProduct;
 
-public record UpdateProductCommand(ProductDto Product) : ICommand<UpdateProductResponse>;
+public record UpdateProductCommand(ProductDto Product) : ICommand<UpdateProductCommandResponse>;
 
-public record UpdateProductResponse(Guid Id);
+public record UpdateProductCommandResponse(Guid Id);
 
-public class UpdateProductCommandHandler : ICommandHandler<UpdateProductCommand, UpdateProductResponse>
+public class UpdateProductCommandHandler : ICommandHandler<UpdateProductCommand, UpdateProductCommandResponse>
 {
     private readonly InventoryDbContext inventoryDbContext;
 
@@ -16,7 +16,7 @@ public class UpdateProductCommandHandler : ICommandHandler<UpdateProductCommand,
     {
         this.inventoryDbContext = inventoryDbContext;
     }
-    public async Task<UpdateProductResponse> Handle(UpdateProductCommand command, CancellationToken cancellationToken)
+    public async Task<UpdateProductCommandResponse> Handle(UpdateProductCommand command, CancellationToken cancellationToken)
     {
 
         var productDto = command.Product;
@@ -31,6 +31,6 @@ public class UpdateProductCommandHandler : ICommandHandler<UpdateProductCommand,
         );
         inventoryDbContext.Products.Update(product);
         await inventoryDbContext.SaveChangesAsync(cancellationToken);
-        return new UpdateProductResponse(product.Id);
+        return new UpdateProductCommandResponse(product.Id);
     }
 }
