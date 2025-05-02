@@ -24,6 +24,7 @@ namespace EComNetMonolith.Inventory
             {
                 configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
                 configuration.AddOpenBehavior(typeof(ValidationBehavior<,>));
+                configuration.AddOpenBehavior(typeof(LoggingBehaviour<,>));
             });
 
             services.AddScoped<ISaveChangesInterceptor, EntityAuditInterceptor>();

@@ -1,6 +1,8 @@
 services:
   ecomdb:
     image: postgres
+  ecomseq:
+    image: datalust/seq:latest
 
 volumes:
   postgres_ecomdb:

@@ -3,8 +3,14 @@ using EComNetMonolith.Order;
 using EComNetMonolith.Inventory;
 using Scalar.AspNetCore;
 using EComNetMonolith.Shared.Exceptions.Handler;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, config) =>
+{
+    config.ReadFrom.Configuration(context.Configuration);
+});
 
 builder.Services
     .AddCartModule(builder.Configuration)
@@ -31,5 +37,7 @@ app.UseCartModule()
     .UseInventoryModule();
 
 app.UseExceptionHandler(options=> { });
+
+app.UseSerilogRequestLogging();
 
 app.Run();

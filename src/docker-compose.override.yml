@@ -10,3 +10,12 @@ services:
       - "5432:5432"
     volumes:
       - postgres_ecomdb:/var/lib/postgresql/data
+  
+  ecomseq:
+    container_name: ecomseq
+    environment:
+      - ACCEPT_EULA=Y
+    restart: always
+    ports:
+      - "5341:5341"
+      - "9091:80"
