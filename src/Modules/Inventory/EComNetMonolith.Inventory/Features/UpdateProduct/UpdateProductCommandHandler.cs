@@ -1,5 +1,6 @@
 ﻿using EComNetMonolith.Inventory.Data;
 using EComNetMonolith.Inventory.DataTransferObjects;
+using EComNetMonolith.Inventory.Exceptions;
 using EComNetMonolith.Shared.CQRS;
 using FluentValidation;
 
@@ -35,7 +36,7 @@ public class UpdateProductCommandHandler : ICommandHandler<UpdateProductCommand,
     {
 
         var productDto = command.Product;
-        var product = await inventoryDbContext.Products.FindAsync([productDto.Id], cancellationToken: cancellationToken) ?? throw new Exception($"Product not found: {productDto.Id}");
+        var product = await inventoryDbContext.Products.FindAsync([productDto.Id], cancellationToken: cancellationToken) ?? throw new ProductNotFoundException(command.Product.Id);
         product.Update(
             productDto.Name,
             productDto.Description,

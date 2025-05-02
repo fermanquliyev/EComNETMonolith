@@ -1,4 +1,5 @@
 ﻿using EComNetMonolith.Inventory.Data;
+using EComNetMonolith.Inventory.Exceptions;
 using EComNetMonolith.Shared.CQRS;
 using FluentValidation;
 using MediatR;
@@ -23,7 +24,7 @@ public class DeleteProductCommandHandler: ICommandHandler<DeleteProductCommand>
     }
     public async Task<Unit> Handle(DeleteProductCommand command, CancellationToken cancellationToken)
     {
-        var product = await inventoryDbContext.Products.FindAsync([command.Id],cancellationToken:cancellationToken) ?? throw new Exception($"Product not found: {command.Id}");
+        var product = await inventoryDbContext.Products.FindAsync([command.Id],cancellationToken:cancellationToken) ?? throw new ProductNotFoundException(command.Id);
         inventoryDbContext.Products.Remove(product);
         await inventoryDbContext.SaveChangesAsync(cancellationToken);
         return Unit.Value;
