@@ -1,5 +1,6 @@
 ﻿using EComNetMonolith.Inventory.Data;
 using EComNetMonolith.Inventory.Data.Seed;
+using EComNetMonolith.Shared.CQRS.Behaviors;
 using EComNetMonolith.Shared.Data;
 using EComNetMonolith.Shared.Data.Interceptors;
 using EComNetMonolith.Shared.Endpoints;
@@ -22,6 +23,7 @@ namespace EComNetMonolith.Inventory
             services.AddMediatR(configuration =>
             {
                 configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+                configuration.AddOpenBehavior(typeof(ValidationBehavior<,>));
             });
 
             services.AddScoped<ISaveChangesInterceptor, EntityAuditInterceptor>();

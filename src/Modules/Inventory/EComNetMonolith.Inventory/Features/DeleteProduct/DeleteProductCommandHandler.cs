@@ -1,10 +1,19 @@
 ﻿using EComNetMonolith.Inventory.Data;
 using EComNetMonolith.Shared.CQRS;
+using FluentValidation;
 using MediatR;
 
 namespace EComNetMonolith.Inventory.Features.DeleteProduct;
 
 public record DeleteProductCommand(Guid Id) : ICommand<Unit>;
+
+public class DeleteProductCommandValidator : AbstractValidator<DeleteProductCommand>
+{
+    public DeleteProductCommandValidator()
+    {
+        RuleFor(x => x.Id).NotEmpty().WithMessage("Id is required.");
+    }
+}
 public class DeleteProductCommandHandler: ICommandHandler<DeleteProductCommand>
 {
     private readonly InventoryDbContext inventoryDbContext;
