@@ -1,4 +1,5 @@
 ﻿using EComNetMonolith.Inventory.DataTransferObjects;
+using EComNetMonolith.Shared.DtataTransferObjects;
 using EComNetMonolith.Shared.Endpoints;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -8,8 +9,13 @@ using Microsoft.AspNetCore.Routing;
 
 namespace EComNetMonolith.Inventory.Features.GetProducts;
 
-public record GetProductsRequest(int PageNumber, int PageSize, string? Search = null, List<string>? Categories = default);
-public record GetProductsResponse(int TotalCount, List<ProductDto> Products);
+public record GetProductsRequest([FromQuery] int PageNumber, [FromQuery] int PageSize, [FromQuery] string? Search = null, [FromQuery] string Categories = "");
+public class GetProductsResponse: PaginatedResult<ProductDto>
+{
+    public GetProductsResponse(int totalCount, IList<ProductDto> items, int pageNumber, int pageSize) : base(items, totalCount, pageNumber, pageSize)
+    {
+    }
+}
 internal class GetProductsEndpoint : IEndpoint
 {
     public RouteHandlerBuilder MapEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
@@ -17,17 +23,13 @@ internal class GetProductsEndpoint : IEndpoint
         return endpointRouteBuilder.MapGet("/products",
         async (
              [FromServices] ISender sender,
-             [FromQuery] int pageNumber = 1,
-             [FromQuery] int pageSize = 10,
-             [FromQuery] string? search = null,
-             [FromQuery] string? categories = null,
+             [AsParameters] GetProductsRequest request,
              CancellationToken cancellationToken = default
              ) =>
              {
-                 var categoriesList = categories?.Split(',').ToList();
-                 var query = new GetProductsQuery(pageNumber, pageSize, search, categoriesList);
+                 var query = new GetProductsQuery(request.PageNumber, request.PageSize, request.Search, request.Categories?.Split(',').ToList());
                  var result = await sender.Send(query, cancellationToken);
-                 return Results.Ok(new GetProductsResponse(result.TotalCount, result.Products));
+                 return Results.Ok(new GetProductsResponse(result.TotalCount, result.Items, request.PageNumber, request.PageSize));
              })
          .WithName("GetProducts")
          .Produces<GetProductsResponse>(StatusCodes.Status200OK)

@@ -1,12 +1,18 @@
 ﻿using EComNetMonolith.Inventory.Data;
 using EComNetMonolith.Inventory.DataTransferObjects;
 using EComNetMonolith.Shared.CQRS;
+using EComNetMonolith.Shared.DtataTransferObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace EComNetMonolith.Inventory.Features.GetProducts;
 
 public record GetProductsQuery(int PageNumber, int PageSize, string? Search = null, List<string>? Categories = default) : IQuery<GetProductsQueryResponse>;
-public record GetProductsQueryResponse(int TotalCount, List<ProductDto> Products);
+public class GetProductsQueryResponse : PaginatedResult<ProductDto>
+{
+    public GetProductsQueryResponse(int totalCount, List<ProductDto> items, int pageNumber, int pageSize) : base(items, totalCount, pageNumber, pageSize)
+    {
+    }
+}
 public class GetProductsQueryHandler: IQueryHandler<GetProductsQuery, GetProductsQueryResponse>
 {
     private readonly InventoryDbContext inventoryDbContext;
@@ -45,7 +51,9 @@ public class GetProductsQueryHandler: IQueryHandler<GetProductsQuery, GetProduct
                 p.Description,
                 p.Price,
                 p.Stock
-            )).ToList()
+            )).ToList(),
+            query.PageNumber,
+            query.PageSize
         );
     }
 }
