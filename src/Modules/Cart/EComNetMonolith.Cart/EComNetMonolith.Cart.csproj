@@ -10,4 +10,8 @@
     <ProjectReference Include="..\..\..\Shared\EComNetMonolith.Shared\EComNetMonolith.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\" />
+  </ItemGroup>
+
 </Project>
