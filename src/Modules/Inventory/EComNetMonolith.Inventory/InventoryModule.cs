@@ -19,6 +19,14 @@ namespace EComNetMonolith.Inventory
         {
             //Data infra services
             var databaseConnectionString = configuration.GetConnectionString("Database");
+            services.AddScoped<ISaveChangesInterceptor, EntityAuditInterceptor>();
+            services.AddScoped<ISaveChangesInterceptor, DomainEventDispatcherInterceptor>();
+            services.AddScoped<IDataSeeder, InventoryDataSeeder>();
+            services.AddDbContext<InventoryDbContext>((sp, options) =>
+            {
+                options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
+                options.UseNpgsql(databaseConnectionString);
+            });
 
             services.AddMediatR(configuration =>
             {
@@ -27,16 +35,7 @@ namespace EComNetMonolith.Inventory
                 configuration.AddOpenBehavior(typeof(LoggingBehaviour<,>));
             });
 
-            services.AddScoped<ISaveChangesInterceptor, EntityAuditInterceptor>();
-            services.AddScoped<ISaveChangesInterceptor, DomainEventDispatcherInterceptor>();
-
-            services.AddDbContext<InventoryDbContext>((sp, options) =>
-            {
-                options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
-                options.UseNpgsql(databaseConnectionString);
-            });
-
-            services.AddScoped<IDataSeeder, InventoryDataSeeder>();
+            
 
             return services;
         }
